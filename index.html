@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Remy Belluau | Data & HR Analytics Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0a1f44, #123b7a);
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 2.8rem; margin-bottom: 12px; }
+
+    section { padding: 80px 10%; }
+
+    h2 { color: #0a1f44; margin-bottom: 35px; text-align: center; }
+
+    .box {
+      background: white;
+      padding: 45px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    /* CV */
+    .cv-box {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    select, button, input {
+      padding: 12px 18px;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+
+    button {
+      background: #0a1f44;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover { background: #123b7a; transform: translateY(-3px); }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 30px;
+    }
+
+    .skill-card {
+      background: white;
+      padding: 35px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .skill-card:hover { transform: translateY(-8px); }
+
+    .skill-card i { font-size: 2rem; color: #123b7a; margin-bottom: 10px; }
+
+    /* BUBBLES */
+    .bubble-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 35px;
+      margin-top: 50px;
+      padding: 40px 0;
+    }
+section:nth-of-type(4) {
+  background: radial-gradient(circle at top, #eef2f7, #dde6f2);
+}
+
+   .bubble {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff, #dbe3ef);
+  box-shadow:
+    10px 10px 25px rgba(0,0,0,0.12),
+    -10px -10px 25px rgba(255,255,255,0.8);
+  color: #0a1f44;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  animation: float 7s ease-in-out infinite;
+  transition: all 0.4s ease;
+}
+.bubble p {
+  position: absolute;
+  bottom: -75px;
+  width: 210px;
+  background: #0a1f44;
+  color: white;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+
+    .bubble.active p { opacity: 1; }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+      100% { transform: translateY(0); }
+    }
+.bubble p::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #0a1f44 transparent;
+}
+
+.bubble:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow:
+    15px 15px 30px rgba(0,0,0,0.18),
+    -15px -15px 30px rgba(255,255,255,0.9);
+}
+
+    .bubble:nth-child(2) { animation-delay: 1s; }
+    .bubble:nth-child(3) { animation-delay: 2s; }
+    .bubble:nth-child(4) { animation-delay: 3s; }
+    .bubble:nth-child(5) { animation-delay: 4s; }
+
+    /* HR CASE */
+    .hr-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 35px;
+    }
+
+    .kpi {
+      background: #f4f6f9;
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .kpi h4 { color: #0a1f44; }
+    .kpi p { font-size: 1.5rem; font-weight: bold; }
+
+    /* CONTACT */
+    .contact {
+      background: #0a1f44;
+      color: white;
+      text-align: center;
+      padding: 60px;
+      border-radius: 18px;
+    }
+
+    .contact a { color: white; font-weight: bold; text-decoration: none; }
+
+    .social a { margin: 0 15px; font-size: 1.8rem; }
+
+    footer { text-align: center; padding: 25px; color: #666; }
+    .pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 30px 0 40px;
+  flex-wrap: wrap;
+  font-weight: bold;
+  color: #0a1f44;
+}
+
+.pipeline .step {
+  background: #eef2f7;
+  padding: 12px 18px;
+  border-radius: 20px;
+}
+
+.pipeline .arrow {
+  font-size: 1.4rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 35px;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.data-table th {
+  background: #0a1f44;
+  color: white;
+}
+.education-header {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.education-header img {
+  height: 42px;
+  background: white;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.education-header small {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Remy Belluau</h1>
+  <p>Data Analyst | HR Analytics | Management Control & Dashboards</p>
+  <div class="education-header">
+  <img src="unicaen.jpg" alt="Université de Caen Normandie logo">
+  <span>
+    Master IPE – Université de Caen Normandie<br>
+    <small>UFR SEGGAT – Economics & Management</small>
+  </span>
+</div>
+
+</header>
+
+<section>
+  <h2>About Me</h2>
+  <div class="box">
+    <p>
+      Data analyst specialized in HR analytics and management control. I design KPI-driven dashboards and transform data into actionable insights for decision-makers.
+    </p>
+
+    <div class="cv-box">
+      <select id="cvSelect">
+        <option value="">Select CV language</option>
+        <option value="CV_Remy_Belluau_FR.pdf">French</option>
+        <option value="CV_Remy_Belluau_EN.pdf">English</option>
+        <option value="CV_Remy_Belluau_JP.pdf">Japanese</option>
+      </select>
+
+      <button onclick="downloadCV()"><i class="fa-solid fa-download"></i> Download CV</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><i class="fa-solid fa-table"></i><h3>Excel</h3><p>Advanced analysis & pivot tables</p></div>
+    <div class="skill-card"><i class="fa-solid fa-chart-column"></i><h3>Power BI / Tableau</h3><p>Data modeling & dashboards</p></div>
+    <div class="skill-card"><i class="fa-brands fa-python"></i><h3>Python</h3><p>Analysis & automation</p></div>
+    <div class="skill-card"><i class="fa-solid fa-brain"></i><h3>Business Insight</h3><p>Statistics & decision support</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>How I Approach Data Problems</h2>
+  <div class="bubble-container">
+    <div class="bubble" onclick="toggleBubble(this)">Business<p>Understand objectives and constraints</p></div>
+    <div class="bubble" onclick="toggleBubble(this)">Data<p>Structure, clean and validate</p></div>
+    <div class="bubble" onclick="toggleBubble(this)">KPIs<p>Design meaningful indicators</p></div>
+    <div class="bubble" onclick="toggleBubble(this)">Dashboard<p>Visual clarity & storytelling</p></div>
+    <div class="bubble" onclick="toggleBubble(this)">Insights<p>Support decisions & actions</p></div>
+  </div>
+</section>
+<section>
+  <h2>Python + Excel → Executive Dashboard</h2>
+
+  <div class="box">
+    <p>
+      This use case reproduces a real HR automation developed during an internship.
+      Excel HR data and promotion rules are processed through a Python logic
+      to generate decision-ready outputs and dashboards.
+    </p>
+
+    <div class="pipeline">
+      <div class="step">Excel HR Data</div>
+      <div class="arrow">→</div>
+      <div class="step">Python Automation</div>
+      <div class="arrow">→</div>
+      <div class="step">Excel Output</div>
+      <div class="arrow">→</div>
+      <div class="step">Dashboard</div>
+    </div>
+
+    <h3>Input – HR Agents (Excel)</h3>
+    <table class="data-table">
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Grade</th>
+        <th>Years in Grade</th>
+      </tr>
+      <tr>
+        <td>1023</td>
+        <td>Martin</td>
+        <td>A2</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>1045</td>
+        <td>Dupont</td>
+        <td>B1</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>1089</td>
+        <td>Leroy</td>
+        <td>A2</td>
+        <td>6</td>
+      </tr>
+    </table>
+
+    <h3>Input – Promotion Rules (Excel)</h3>
+    <table class="data-table">
+      <tr>
+        <th>Current Grade</th>
+        <th>Target Grade</th>
+        <th>Min Years Required</th>
+      </tr>
+      <tr>
+        <td>A2</td>
+        <td>A3</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>B1</td>
+        <td>B2</td>
+        <td>3</td>
+      </tr>
+    </table>
+
+    <button onclick="runPythonSimulation()">Run Python Analysis</button>
+
+    <div id="pythonResult" style="display:none; margin-top:40px;">
+      <h3>Output – Eligible for Promotion</h3>
+
+      <table class="data-table">
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Current Grade</th>
+          <th>Target Grade</th>
+        </tr>
+        <tr>
+          <td>1089</td>
+          <td>Leroy</td>
+          <td>A2</td>
+          <td>A3</td>
+        </tr>
+      </table>
+
+      <p style="margin-top:20px;">
+        Resulting file generated automatically and ready for management review.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h2>HR Executive Decision Simulator</h2>
+
+  <div class="box">
+    <p>
+      This simulator illustrates how I support HR and finance leadership
+      through KPI analysis and decision-oriented dashboards.
+    </p>
+
+    <label for="scenario"><strong>Select a business scenario:</strong></label>
+    <select id="scenario" onchange="loadScenario()">
+      <option value="">Choose a scenario</option>
+      <option value="stable">Stable Workforce</option>
+      <option value="growth">Growth Phase</option>
+      <option value="pressure">Cost Pressure</option>
+    </select>
+<div style="margin-top:30px;">
+  <label><strong>What-if: Payroll increase (%)</strong></label><br>
+  <input
+    type="range"
+    id="payrollWhatIf"
+    min="0"
+    max="20"
+    value="0"
+    oninput="applyWhatIf()"
+  />
+  <span id="whatIfValue">0%</span>
+</div>
+<div style="margin-top:20px;">
+  <label><strong>What-if: Revenue growth (%)</strong></label><br>
+  <input
+    type="range"
+    id="revenueWhatIf"
+    min="-10"
+    max="20"
+    value="0"
+    oninput="applyWhatIf()"
+  />
+  <span id="revenueWhatIfValue">0%</span>
+</div>
+
+
+    <div id="simulatorDashboard" style="display:none; margin-top:35px;">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <h4>Payroll Ratio</h4>
+          <p id="payrollRatioSim"></p>
+        </div>
+        <div class="kpi">
+          <h4>Revenue per Employee</h4>
+          <p id="revPerEmpSim"></p>
+        </div>
+        <div class="kpi">
+          <h4>HR Cost Ratio</h4>
+          <p id="hrRatioSim"></p>
+        </div>
+      </div>
+
+      <canvas id="simulatorChart" style="margin-top:40px;"></canvas>
+
+      <div class="box" style="margin-top:35px; background:#eef2f7;">
+        <h3>Executive Recommendation</h3>
+        <p id="recommendationText"></p>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h2>Contact</h2>
+  <div class="contact">
+    <p>Email: <a href="mailto:remy.belluau@hotmail.fr">remy.belluau@hotmail.fr</a></p>
+    <div class="social">
+      <a href="https://www.linkedin.com/in/remybelluau" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://github.com/remybelluau" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 Remy Belluau</footer>
+
+<script>
+    let baseRevenuePerEmployee = 0;
+let baseHrRatio = 0;
+let basePayrollRatio = 0;
+let currentScenario = "";
+
+let chart;
+
+function downloadCV() {
+  const file = document.getElementById("cvSelect").value;
+  if (!file) { alert("Please select a CV language"); return; }
+  window.location.href = file;
+}
+
+function toggleBubble(el) {
+  document.querySelectorAll('.bubble').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function generateDashboard() {
+  const emp = Number(document.getElementById("employees").value);
+  const payroll = Number(document.getElementById("payroll").value);
+  const revenue = Number(document.getElementById("revenue").value);
+  const hr = Number(document.getElementById("hrBudget").value);
+
+  if (!emp || !payroll || !revenue || !hr) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const avgSalary = payroll / emp;
+  const revEmp = revenue / emp;
+  const payrollPct = (payroll / revenue) * 100;
+  const hrPct = (hr / revenue) * 100;
+
+  document.getElementById("avgSalary").textContent = avgSalary.toFixed(0) + " €";
+  document.getElementById("revPerEmp").textContent = revEmp.toFixed(0) + " €";
+  document.getElementById("payrollRatio").textContent = payrollPct.toFixed(1) + " %";
+  document.getElementById("hrRatio").textContent = hrPct.toFixed(1) + " %";
+
+  document.getElementById("dashboard").style.display = "block";
+
+  const ctx = document.getElementById("kpiChart");
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Payroll % of Revenue", "HR Cost % of Revenue"],
+      datasets: [{ data: [payrollPct, hrPct], backgroundColor: "#123b7a" }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => v + " %" } } }
+    }
+  });
+}
+function runPythonSimulation() {
+  const result = document.getElementById("pythonResult");
+  result.style.display = "block";
+}
+let simulatorChart;
+
+function loadScenario() {
+  const scenario = document.getElementById("scenario").value;
+  const dashboard = document.getElementById("simulatorDashboard");
+
+  if (!scenario) {
+    dashboard.style.display = "none";
+    return;
+  }
+
+  let payrollRatio, revPerEmp, hrRatio, recommendation;
+
+  if (scenario === "stable") {
+    payrollRatio = 52;
+    revPerEmp = 85000;
+    hrRatio = 3.2;
+    recommendation =
+      "Payroll structure is balanced and aligned with industry standards. Focus on maintaining productivity and talent retention.";
+  basePayrollRatio = payrollRatio;
+  currentScenario = scenario;
+  baseRevenuePerEmployee = revPerEmp;
+  baseHrRatio = hrRatio;
+    }
+
+  if (scenario === "growth") {
+    payrollRatio = 60;
+    revPerEmp = 72000;
+    hrRatio = 4.5;
+    recommendation =
+      "Rapid hiring impacts productivity ratios. Monitor onboarding efficiency and prioritize performance ramp-up.";
+  basePayrollRatio = payrollRatio;
+  currentScenario = scenario;
+  baseRevenuePerEmployee = revPerEmp;
+  baseHrRatio = hrRatio;
+    }
+
+  if (scenario === "pressure") {
+    payrollRatio = 68;
+    revPerEmp = 65000;
+    hrRatio = 5.1;
+    recommendation =
+      "Payroll costs exceed recommended thresholds. Consider productivity initiatives or cost containment actions.";
+  basePayrollRatio = payrollRatio;
+  currentScenario = scenario;
+  baseRevenuePerEmployee = revPerEmp;
+  baseHrRatio = hrRatio;
+    }
+
+  document.getElementById("payrollRatioSim").textContent = payrollRatio + " %";
+  document.getElementById("revPerEmpSim").textContent = revPerEmp.toLocaleString() + " €";
+  document.getElementById("hrRatioSim").textContent = hrRatio + " %";
+
+  dashboard.style.display = "block";
+
+  const ctx = document.getElementById("simulatorChart");
+  if (simulatorChart) simulatorChart.destroy();
+
+  simulatorChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Payroll Ratio", "HR Cost Ratio"],
+      datasets: [
+        {
+          data: [payrollRatio, hrRatio],
+          backgroundColor: "#123b7a"
+        }
+      ]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => v + " %" }
+        }
+      }
+    }
+  });
+
+  document.getElementById("recommendationText").textContent = recommendation;
+}
+function applyWhatIf() {
+  const payrollIncrease = Number(document.getElementById("payrollWhatIf").value);
+  const revenueGrowth = Number(document.getElementById("revenueWhatIf").value);
+
+  document.getElementById("whatIfValue").textContent = payrollIncrease + "%";
+  document.getElementById("revenueWhatIfValue").textContent = revenueGrowth + "%";
+
+  if (!basePayrollRatio || !baseRevenuePerEmployee) return;
+
+  // Payroll impact
+  const newPayrollRatio =
+    basePayrollRatio * (1 + payrollIncrease / 100) / (1 + revenueGrowth / 100);
+
+  // Revenue impact
+  const newRevenuePerEmployee =
+    baseRevenuePerEmployee * (1 + revenueGrowth / 100);
+
+  document.getElementById("payrollRatioSim").textContent =
+    newPayrollRatio.toFixed(1) + " %";
+
+  document.getElementById("revPerEmpSim").textContent =
+    newRevenuePerEmployee.toLocaleString() + " €";
+
+  // Recommendation logic
+  let recommendation =
+    "Financial balance remains under control under this scenario.";
+
+  if (newPayrollRatio > 65) {
+    recommendation =
+      "Payroll pressure becomes critical. Strong productivity or cost actions required.";
+  } else if (newPayrollRatio > 58) {
+    recommendation =
+      "Payroll pressure increases. Monitor revenue growth and hiring closely.";
+  }
+
+  document.getElementById("recommendationText").textContent = recommendation;
+
+  // Update chart
+  if (simulatorChart) {
+    simulatorChart.data.datasets[0].data = [
+      newPayrollRatio,
+      baseHrRatio
+    ];
+    simulatorChart.update();
+  }
+}
+
+
+</script>
+
+</body>
+</html>
